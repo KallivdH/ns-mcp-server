@@ -1,30 +1,32 @@
-runtime: container
+runtime: "container"
 
 build:
-  dockerfile: Dockerfile
-  context: .
+  dockerfile: "Dockerfile"
+  dockerBuildPath: "."
 
-config:
-  schema:
-    type: object
+startCommand:
+  type: "http"
+  configSchema:
+    type: "object"
     properties:
       NS_API_KEY:
-        type: string
-        description: NS API key for accessing Dutch railway data
-        required: true
+        type: "string"
+        description: "NS API key for accessing Dutch railway data"
     required:
-      - NS_API_KEY
+      - "NS_API_KEY"
+  exampleConfig:
+    NS_API_KEY: "your-ns-api-key-here"
 
 metadata:
-  name: ns-mcp-server
-  description: Transform your AI assistant into a Dutch railways expert! This MCP server connects Claude to real-time NS (Nederlandse Spoorwegen) travel information.
-  version: 0.1.6
-  author: Kalli van den Hoek
-  repository: https://github.com/KallivdH/ns-mcp-server
-  license: MIT
+  name: "ns-mcp-server"
+  description: "Transform your AI assistant into a Dutch railways expert! This MCP server connects Claude to real-time NS (Nederlandse Spoorwegen) travel information."
+  version: "0.1.6"
+  author: "Kalli van den Hoek"
+  repository: "https://github.com/KallivdH/ns-mcp-server"
+  license: "MIT"
   tags:
-    - transportation
-    - netherlands
-    - trains
-    - travel
-    - public-transport
+    - "transportation"
+    - "netherlands"
+    - "trains"
+    - "travel"
+    - "public-transport"

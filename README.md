@@ -42,7 +42,7 @@ You can get an API key from [NS API Portal](https://apiportal.ns.nl/)
 To install NS Travel Information Server automatically via [Smithery](https://smithery.ai/server/ns-server):
 
 ```bash
-npx -y @smithery/cli install ns-server --client claude
+npx -y @smithery/cli install ns-server
 ```
 
 ### 3. From Source

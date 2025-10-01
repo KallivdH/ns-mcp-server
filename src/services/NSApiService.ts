@@ -18,6 +18,7 @@ import {
 
 export class NSApiService {
   private axiosInstance: AxiosInstance;
+  private apiKey: string;
   private static readonly BASE_URL = 'https://gateway.apiportal.ns.nl';
   private static readonly ENDPOINTS = {
     DISRUPTIONS: '/disruptions/v3',
@@ -30,6 +31,7 @@ export class NSApiService {
   } as const;
 
   constructor(apiKey: string) {
+    this.apiKey = apiKey;
     this.axiosInstance = axios.create({
       baseURL: NSApiService.BASE_URL,
       headers: {
@@ -38,7 +40,14 @@ export class NSApiService {
     });
   }
 
+  private ensureApiKeyConfigured(): void {
+    if (!this.apiKey) {
+      throw new Error('NS_API_KEY is not configured. Please provide your NS API key in the server configuration.');
+    }
+  }
+
   async getDisruptions(args: GetDisruptionsArgs): Promise<Disruption[]> {
+    this.ensureApiKeyConfigured();
     const response = await this.axiosInstance.get<Disruption[]>(
       NSApiService.ENDPOINTS.DISRUPTIONS,
       {
@@ -52,6 +61,7 @@ export class NSApiService {
   }
 
   async getTravelAdvice(args: GetTravelAdviceArgs): Promise<TravelAdvice[]> {
+    this.ensureApiKeyConfigured();
     const response = await this.axiosInstance.get<TravelAdvice[]>(
       NSApiService.ENDPOINTS.TRIPS,
       {
@@ -67,6 +77,7 @@ export class NSApiService {
   }
 
   async getDepartures(args: GetDeparturesArgs): Promise<DeparturesResponse> {
+    this.ensureApiKeyConfigured();
     const response = await this.axiosInstance.get<DeparturesResponse>(
       NSApiService.ENDPOINTS.DEPARTURES,
       {
@@ -82,6 +93,7 @@ export class NSApiService {
   }
 
   async getOVFiets(args: GetOVFietsArgs): Promise<OVFietsResponse> {
+    this.ensureApiKeyConfigured();
     const response = await this.axiosInstance.get<OVFietsResponse>(
       NSApiService.ENDPOINTS.OVFIETS,
       {
@@ -94,6 +106,7 @@ export class NSApiService {
   }
 
   async getStationInfo(args: StationInfoArgs): Promise<StationInfoResponse> {
+    this.ensureApiKeyConfigured();
     const response = await this.axiosInstance.get<StationInfoResponse>(
       NSApiService.ENDPOINTS.STATIONS,
       {
@@ -108,6 +121,7 @@ export class NSApiService {
   }
 
   async getArrivals(args: GetArrivalsArgs): Promise<ArrivalsResponse> {
+    this.ensureApiKeyConfigured();
     const response = await this.axiosInstance.get<ArrivalsResponse>(
       NSApiService.ENDPOINTS.ARRIVALS,
       {
@@ -124,6 +138,7 @@ export class NSApiService {
   }
 
   async getPrices(args: GetPricesArgs): Promise<PricesResponse> {
+    this.ensureApiKeyConfigured();
     const response = await this.axiosInstance.get<PricesResponse>(
       NSApiService.ENDPOINTS.PRICES,
       {

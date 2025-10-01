@@ -510,10 +510,18 @@ class NSHttpServer {
   }
 
   async start(): Promise<void> {
-    this.app.listen(this.port, () => {
-      console.log(`NS MCP Server listening on port ${this.port}`);
-      console.log(`Health check: http://localhost:${this.port}/health`);
-      console.log(`MCP endpoint: http://localhost:${this.port}/mcp`);
+    return new Promise((resolve, reject) => {
+      const server = this.app.listen(this.port, '0.0.0.0', () => {
+        console.log(`NS MCP Server listening on port ${this.port}`);
+        console.log(`Health check: http://localhost:${this.port}/health`);
+        console.log(`MCP endpoint: http://localhost:${this.port}/mcp`);
+        resolve();
+      });
+
+      server.on('error', (error) => {
+        console.error('Failed to start server:', error);
+        reject(error);
+      });
     });
   }
 }

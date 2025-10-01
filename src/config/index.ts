@@ -11,10 +11,7 @@ export class Config {
   private constructor() {
     dotenv.config();
 
-    const NS_API_KEY = process.env.NS_API_KEY;
-    if (!NS_API_KEY) {
-      throw new Error('NS_API_KEY environment variable is required');
-    }
+    const NS_API_KEY = process.env.NS_API_KEY || '';
 
     this.config = {
       NS_API_KEY,

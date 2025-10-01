@@ -1,17 +1,30 @@
-# Smithery configuration file: https://smithery.ai/docs/config#smitheryyaml
+runtime: container
 
-startCommand:
-  type: stdio
-  configSchema:
-    # JSON Schema defining the configuration options for the MCP.
+build:
+  dockerfile: Dockerfile
+  context: .
+
+config:
+  schema:
     type: object
-    required:
-      - nsApiKey
     properties:
-      nsApiKey:
+      NS_API_KEY:
         type: string
-        description: The API key for the NS (Nederlandse Spoorwegen) server.
-  commandFunction:
-    # A function that produces the CLI command to start the MCP on stdio.
-    |-
-    (config) => ({ command: 'node', args: ['build/index.js'], env: { NS_API_KEY: config.nsApiKey } })
+        description: NS API key for accessing Dutch railway data
+        required: true
+    required:
+      - NS_API_KEY
+
+metadata:
+  name: ns-mcp-server
+  description: Transform your AI assistant into a Dutch railways expert! This MCP server connects Claude to real-time NS (Nederlandse Spoorwegen) travel information.
+  version: 0.1.6
+  author: Kalli van den Hoek
+  repository: https://github.com/KallivdH/ns-mcp-server
+  license: MIT
+  tags:
+    - transportation
+    - netherlands
+    - trains
+    - travel
+    - public-transport

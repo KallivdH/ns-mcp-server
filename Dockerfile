@@ -26,5 +26,8 @@ COPY --from=builder /app/package-lock.json /app/package-lock.json
 # Install only production dependencies
 RUN npm ci --omit=dev
 
-# Define the command to run the application
-ENTRYPOINT ["node", "build/index.js"]
+# Expose port for HTTP server
+EXPOSE 8081
+
+# Define the command to run the HTTP server
+ENTRYPOINT ["node", "build/http-server.js"]
